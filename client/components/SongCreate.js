@@ -12,8 +12,12 @@ class SongCreate extends Component {
   onSubmit(event) {
     event.preventDefault();
 
-    //the props at this moment, should have the mutation info. Go to the frontend, type a song name and check the console to find what kind of data the mutations has logged
-    console.log(this.props);
+    //the query variables for mutation can be accessed from the props
+    this.props.mutate({
+      variables: {
+        title: this.state.title,
+      },
+    });
   }
 
   render() {
@@ -36,7 +40,7 @@ class SongCreate extends Component {
 const mutation = gql`
   mutation AddSong($title: String) {
     addSong(title: $title) {
-        title
+      title
     }
   }
 `;
