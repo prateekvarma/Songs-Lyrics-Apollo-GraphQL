@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { graphql } from "react-apollo";
 import gql from "graphql-tag";
-import { Link, hashHistory } from "react-router"; 
+import { Link, hashHistory } from "react-router";
+
+import query from "../queries/fetchSongs";
 
 class SongCreate extends Component {
   constructor(props) {
@@ -15,9 +17,8 @@ class SongCreate extends Component {
 
     //the query variables for mutation can be accessed from the props
     this.props.mutate({
-      variables: {
-        title: this.state.title,
-      },
+      variables: { title: this.state.title },
+      refetchQueries: [{ query: query }] //this solves the caching problem is Apollo Client when a new entry is not displayed
     }).then(() => hashHistory.push("/"));
   }
 
